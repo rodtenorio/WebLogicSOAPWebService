@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "HelloWorldService", targetNamespace = "http://soapwstemplate.csm.oracle.com/", wsdlLocation = "http://localhost:7001/HelloWorldImpl/HelloWorldService?WSDL")
+@WebServiceClient(name = "HelloWorldService", targetNamespace = "http://soapwstemplate.csm.oracle.com/", wsdlLocation = "http://localhost:7001/WebLogicSOAPWebService/HelloWorldService?WSDL")
 public class HelloWorldService
     extends Service
 {
@@ -30,7 +30,7 @@ public class HelloWorldService
         WebServiceException e = null;
         URL url = null;
         try {
-            url = new URL(com.oracle.csm.soapwsexample.client.HelloWorldService.class.getResource("."), "http://localhost:7001/HelloWorldImpl/HelloWorldService?WSDL");
+            url = new URL(com.oracle.csm.soapwsexample.client.HelloWorldService.class.getResource("."), "http://localhost:7001/WebLogicSOAPWebService/HelloWorldService?WSDL");
         } catch (MalformedURLException murl) {
             e = new WebServiceException(murl);
         }

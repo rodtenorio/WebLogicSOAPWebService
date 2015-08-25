@@ -4,6 +4,30 @@
 	<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" />
 	<taskdef name="clientgen" classname="weblogic.wsee.tools.anttasks.ClientGenTask" />
 
+	<property name="war_file_name" value="WebLogicSOAPWebService.war" />
+
+	<property name="autodeploy_dir" value="/Users/rodrigotenorio/Documents/Oracle/WebLogic/domains/tenorio-domain/autodeploy" />
+	
+	<target name="undeploy">
+		<delete file="${autodeploy_dir}/${war_file_name}" />
+	</target>
+	
+	<target name="deploy">
+		<copy todir="${autodeploy_dir}" file="target/${war_file_name}" />
+	</target>
+
+	<target name="package">
+		<exec dir="." executable="/Applications/Java/apache-maven-3.3.3/bin/mvn" >
+			<arg value="clean" />
+			<arg value="package" />
+			<arg value="-Dmaven.test.skip=true" />
+		</exec>
+	</target>
+
+	<target name="clean-up">
+		<delete dir="target" includeemptydirs="true" includes="**/*.*" />
+	</target>
+	
 	<target name="build-service">
 		<delete>
 			<fileset dir="target/WebLogicSOAPWebService" includes="**/*.*" />
