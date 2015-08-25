@@ -1,0 +1,20 @@
+<project name="webservices-hello_world">
+
+	<taskdef name="jwsc" classname="weblogic.wsee.tools.anttasks.JwscTask" />
+	<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" />
+	<taskdef name="clientgen" classname="weblogic.wsee.tools.anttasks.ClientGenTask" />
+
+	<target name="build-service">
+		<delete>
+			<fileset dir="target/WebLogicSOAPWebService" includes="**/*.*" />
+		</delete>
+
+		<jwsc srcdir="src/main/java" destdir="target/WebLogicSOAPWebService">
+			<jws file="com/oracle/csm/soapwstemplate/HelloWorldImpl.java" type="JAXWS" />
+		</jwsc>
+	</target>
+
+	<target name="client">
+		<clientgen wsdl="http://localhost:7001/HelloWorldImpl/HelloWorldService?WSDL" destDir="src/main/java" packageName="com.oracle.csm.soapwsexample.client" type="JAXWS" />
+	</target>
+</project>
