@@ -1,0 +1,29 @@
+<project name="webservices-hello_world">
+
+  <!-- ATTENTION: weblogic.jar must be added to the classpath -->
+  
+  <taskdef name="jwsc" classname="weblogic.wsee.tools.anttasks.JwscTask" />
+  <taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" />
+  <taskdef name="clientgen" classname="weblogic.wsee.tools.anttasks.ClientGenTask" />
+
+  <property name="tmp_dir" value="tmp/WebLogicSOAPWebService" />
+
+  <target name="clean-up">
+    <delete dir="${tmp_dir}" includeemptydirs="true" />
+  </target>
+	
+  <!-- Step 1 - Create the webapp. After creating, deploy the webapp to WebLogic server and run Step 2 to generate client classes.-997 -->
+  <target name="step-1-build-service">
+  	<antcall target="clean-up" />
+
+    <jwsc srcdir="src/main/java" destdir="${tmp_dir}">
+      <jws file="com/oracle/csm/soapwstemplate/HelloWorldImpl.java" type="JAXWS" />
+    </jwsc>
+  </target>
+
+  <!-- Step 2 - Generate client classes -->
+  <target name="step-2-client">
+    <clientgen wsdl="http://localhost:7001/WebLogicSOAPWebService/HelloWorldService?WSDL" destDir="src/main/java" packageName="com.oracle.csm.soapwsexample.client" type="JAXWS" />
+  </target>
+
+</project>

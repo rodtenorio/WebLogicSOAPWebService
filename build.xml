@@ -1,12 +1,10 @@
 <project name="webservices-hello_world">
 
-	<taskdef name="jwsc" classname="weblogic.wsee.tools.anttasks.JwscTask" />
+	<!-- ATTENTION: weblogic.jar must be added to the classpath -->
+	
 	<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" />
-	<taskdef name="clientgen" classname="weblogic.wsee.tools.anttasks.ClientGenTask" />
 
-	<property name="war_file_name" value="WebLogicSOAPWebService.war" />
-
-	<property name="autodeploy_dir" value="/Users/rodrigotenorio/Documents/Oracle/WebLogic/domains/tenorio-domain/autodeploy" />
+	<!-- These are build targets. They are not related to creating the webservice classes. -->
 	
 	<target name="undeploy">
 		<delete file="${autodeploy_dir}/${war_file_name}" />
@@ -25,20 +23,7 @@
 	</target>
 
 	<target name="clean-up">
-		<delete dir="target" includeemptydirs="true" includes="**/*.*" />
-	</target>
-	
-	<target name="build-service">
-		<delete>
-			<fileset dir="target/WebLogicSOAPWebService" includes="**/*.*" />
-		</delete>
-
-		<jwsc srcdir="src/main/java" destdir="target/WebLogicSOAPWebService">
-			<jws file="com/oracle/csm/soapwstemplate/HelloWorldImpl.java" type="JAXWS" />
-		</jwsc>
+		<delete dir="target" includeemptydirs="true" />
 	</target>
 
-	<target name="client">
-		<clientgen wsdl="http://localhost:7001/HelloWorldImpl/HelloWorldService?WSDL" destDir="src/main/java" packageName="com.oracle.csm.soapwsexample.client" type="JAXWS" />
-	</target>
 </project>
