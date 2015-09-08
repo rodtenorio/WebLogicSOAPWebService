@@ -6,24 +6,30 @@
   <taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy" />
   <taskdef name="clientgen" classname="weblogic.wsee.tools.anttasks.ClientGenTask" />
 
-  <property name="tmp_dir" value="tmp/WebLogicSOAPWebService" />
+  <property name="tmp-dir" value="tmp" />
+  <!--<property name="wsdl-url" value="http://localhost:7001/WebLogicSOAPWebService/HelloWorldService?WSDL" />-->
+  <property name="wsdl-url" value="https://icslad01-mbutuem02.integration.us2.oraclecloud.com/integration/flowsvc/osc/RKU_DEMO2_SC_RN/v01/?wsdl" />
+  <!--<property name="client-class-package" value="com.oracle.csm.soapwsexample.client" />-->
+  <property name="client-class-package" value="com.oracle.csm.webservice.client" />
+  <property name="client-target-dir" value=""></property>
+
 
   <target name="clean-up">
-    <delete dir="${tmp_dir}" includeemptydirs="true" />
+    <delete dir="${tmp-dir}" includeemptydirs="true" />
   </target>
 	
   <!-- Step 1 - Create the webapp. After creating, deploy the webapp to WebLogic server and run Step 2 to generate client classes.-997 -->
   <target name="step-1-build-service">
   	<antcall target="clean-up" />
 
-    <jwsc srcdir="src/main/java" destdir="${tmp_dir}">
+    <jwsc srcdir="src/main/java" destdir="${tmp-dir}">
       <jws file="com/oracle/csm/soapwstemplate/HelloWorldImpl.java" type="JAXWS" />
     </jwsc>
   </target>
 
   <!-- Step 2 - Generate client classes -->
   <target name="step-2-client">
-    <clientgen wsdl="http://localhost:7001/WebLogicSOAPWebService/HelloWorldService?WSDL" destDir="src/main/java" packageName="com.oracle.csm.soapwsexample.client" type="JAXWS" />
+    <clientgen wsdl="${wsdl-url}" destDir="${tmp-dir}/client-classes" packageName="${client-class-package}" type="JAXWS" />
   </target>
 
 </project>
